@@ -1,0 +1,19 @@
+{
+  "name": "wikiGolf",
+  "version": "0.0.0",
+  "description": "First personal project for CodeFellows",
+  "main": "gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": "",
+  "author": "",
+  "license": "BSD",
+  "readmeFilename": "README.md",
+  "gitHead": "fe0f7386938a0d26f99fe863950d0ed93ba675ec",
+  "dependencies": {
+    "grunt": "~0.4.1",
+    "express": "~3.4.4"
+  }
+}
