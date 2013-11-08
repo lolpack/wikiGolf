@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script type="text/javascript" src='../static/js/mainpage.js'></script>
+	<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/maintheme.css') }}" />
+	<script src ='//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js'></script>
+	<script src ='//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js'></script>
+	<script src="../static/js/main.js"></script>
+	<script src="../static/js/models/user.js"></script>
+	<script src="../static/js/collections/users.js"></script>
+	<script src="../static/js/routers/router.js"></script>
+	<title>wikiGolf</title>
+	<script>
+	document.getElementById("newLink").style.display = 'none'
+
+	</script>
+</head>
+<body>
+	<div id="Main">
+		<h1> Welcome to {{entries.title}} </h1>
+		<p> Get from one Wikipedia page to another in as few strokes(links) as you can. </p>
+		<a id="newLink" href="/#second">Load Wiki Pages<a>
+		<div id="wikiPageentry"> {{entries.wikiPage}} </div>
+		<iframe src="http://en.wikipedia.org/wiki/Sam_Younger"  id="iframe1" marginheight="0" frameborder="0"></iframe>
+		<div id="logo">
+			<img  src="static/img/Logo.png" alt="wikiGolf"  id="logo"/>
+			<div id= "Black-Background"></div>
+		</div>
+	</div>
+</body>
+</html>

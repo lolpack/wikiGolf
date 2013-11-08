@@ -1,0 +1,49 @@
+#iframe1 {
+	height: 500px;
+	width: 960px;
+}
+
+h1, p {
+	font-family: Verdana, arial, sans-serif ;
+	text-align: center;
+}
+
+body {
+	background-image: url("../img/wild_flowers.png");
+}
+
+#Main {
+	width : 960px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media screen and (max-width: 960px) {
+	#Main {
+		width: 100%;
+	}
+}
+
+img {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+	position: relative;
+	height:100px; 
+	width:300px;
+	z-index: 2;
+}
+
+#Black-Background {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+	background-color: black;
+	width: 960px;
+	height: 100px;
+	position: relative;
+	top: -105px;
+
+	z-index: 1;
+}
