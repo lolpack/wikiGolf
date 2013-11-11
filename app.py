@@ -11,9 +11,13 @@ def loadWikiPage():
 
 
 @app.route("/")
-def hello():
+def main():
 	entries = {"title": "wikiGolf", "wikiPage": loadWikiPage()}
 	return render_template('index.html', entries=entries)
+
+@app.route("/")
+def ajaxWiki():
+	
 
 if __name__ == "__main__":
     app.run(debug = True)
