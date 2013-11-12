@@ -9,7 +9,6 @@ APP.Course = Backbone.Model.extend({
 
 });
 
-var newpage = new APP.Course();
 
 
 

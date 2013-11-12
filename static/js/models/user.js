@@ -1,6 +1,8 @@
 APP.User = Backbone.Model.extend({
+
 	defaults: function () {
 		return {
+		id: null,
 		name: null,
 		curStrokes: 0,
 		games_played: 0,

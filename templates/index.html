@@ -12,6 +12,7 @@
 	<script src="../static/js/models/course.js"></script>
 	<script src="../static/js/collections/users.js"></script>
 	<script src="../static/js/routers/router.js"></script>
+	<script src="../static/js/views/user_view.js"></script>
 	<script>$( document ).ready(function () {
 				$("iframe").load(function() {
     				$("iframe").contents().find("a").each(function(index) {
@@ -39,23 +40,21 @@
 		<h2> Get from one Wikipedia page to another in as few strokes(links) as you can. </h2>
 	
 		<p> Displaying links for the Wikipedia page "{{entries.wikiTitle}}"</p>
-		<a id="newLink" href="/#one">Backbone #one<a>
-		<a id="newLink2" href="/#second">Backbone #second<a>
-		
-		<ul>
-			{% for link in entries.links %}
-			<li><a href="/#wiki/{{link}}">{{link}}</a></li>
-			{% endfor %}
-		</ul>
+		<a id="newLink" href="/#first">Backbone #one></a>
+		<a id="newLink2" href="/#second">Show Wiki Links></a>
 
-		<!--<div id="wikiPageentry"> {{entries.wikiPage}} </div>-->
+
+
+		<!--<div id="wikiPageentry"> {{entries.wikiPage}} </div>
 		<iframe src="http://en.wikipedia.org/wiki/javascript"  id="iframe1" marginheight="0" frameborder="0">
 
-		</iframe>
-		<div id="logo">
-			<img  src="static/img/Logo.png" alt="wikiGolf"  id="logo"/>
-			<div id= "Black-Background"></div>
-		</div>
+		</iframe>-->
+
+	<div>
 	</div>
+
+	</div>
+		<img  src="static/img/Logo.png" alt="wikiGolf"  id="logo"/>
+		<div id= "Black-Background"></div>
 </body>
 </html>

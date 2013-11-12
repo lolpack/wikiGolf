@@ -9,17 +9,17 @@ def loadWikiPage():
 	randomPage = W.page(random)
 	return randomPage.links, randomPage.title
 
-content_title = loadWikiPage()
+links_title = loadWikiPage()
 
-dab = [{"name": "First", "facebookPointer": None}]
-class db():
-	def __init__(self):
-		self.DB = ""
-db = db()
+coursePath = []
+
+dab = [{"id":1,  "name": "First", "facebookPointer": None},
+		{"id": 2, "name": "John"},
+		{"id": 3, "name": links_title[0]}]
 
 @app.route("/")
 def main():
-	entries = {"title": "wikiGolf", "wikiPage": content_title[0], "wikiTitle": content_title[1], "links" : content_title[0] }
+	entries = {"title": "wikiGolf", "wikiPage": links_title[0], "wikiTitle": links_title[1], "links" : links_title[0] }
 	return render_template('index.html', entries=entries)
 
 
@@ -31,6 +31,12 @@ def getJSON():
 		return "Success!"
 	elif request.method == 'GET':
 		return Response(json.dumps(dab), content_type='application/json')
+
+@app.route("/nextWiki", methods= ['POST', 'GET'])
+def nextWiki():
+	if request.method == 'POST':
+		print request.json
+		return "Success"
 
 if __name__ == "__main__":
     app.run(debug = True)

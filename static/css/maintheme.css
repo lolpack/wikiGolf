@@ -8,8 +8,7 @@
 }
 
 h1 {
-	/* font-family: Verdana, arial, sans-serif ; */
-	/* text-align: center; */
+
 	font-weight: 200;
 	margin: 0;
 	color: #FFF;
@@ -18,10 +17,9 @@ h1 {
 }
 
 h2 {
-	/* text-align: center; */
+
 	font-family: arial, sans-serif ;
 	font-weight: 200;
-	/* margin: 0; */
 }
 
 body {
@@ -36,15 +34,19 @@ body {
 
 #main {
 	max-width: 960px;
+	max-height: auto;
 	margin-left: auto;
 	margin-right: auto;
+	overflow: hidden;
+	margin-bottom: 25px
 }
 
 @media screen and (max-width: 960px) {
-	#Main {
+	#main {
 		width: 100%;
 	}
 }
+
 
 img {
 	display: block;
@@ -62,11 +64,10 @@ img {
     margin-left: auto;
     margin-right: auto;
 	background-color: black;
-	width: 960px;
 	height: 100px;
 	position: relative;
 	top: -105px;
-
+	bottom: 0px;
 	z-index: 1;
 }
 

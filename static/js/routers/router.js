@@ -1,27 +1,40 @@
 APP.Router = Backbone.Router.extend({
 	routes: {
 		"first": "firstRoute",
-		"second": "secondRouter"
+		"second": "secondRouter",
+		"wiki/:page" : "newPageLoader"
 	},
 	firstRoute: function() {
 		alert("First route was hit");
 		APP.userCollections = new APP.Users();
 
-		APP.userCollections.create({name:"colin", strokes: 5});
-		APP.userCollections.create({name:"dan", facebookPointer: null});
 	},
 	secondRouter: function () {
 		APP.usersCollection = new APP.Users();
-		var t= APP.usersCollection.fetch();
-		console.dir(APP.usersCollection);
+		APP.usersCollection.fetch({
+			success: function () {
+				APP.user1 = APP.usersCollection.get(3);
+				APP.user1view = new APP.UserView({
+					model: APP.user1
+				})
+				APP.user1view.render();
+                $('#main').append(APP.user1view.$el);
+                console.log(APP.usersCollection.get(3));
+			}
+		});
+
 		
+
+	},
+	newPageLoader : function (page) {
+		APP.coureseCollection = new APP.CoursesCollection();
+		APP.coureseCollection.add([page]);
+		console.log(APP.coureseCollection);
 
 	}
 
 });
 
-var sum = _.reduce([1, 2, 3], function(memo, num){ return memo + num; }, 0);
-console.log(sum)
 
 APP.router = new APP.Router();
 Backbone.history.start({root: "/"})
