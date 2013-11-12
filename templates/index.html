@@ -9,21 +9,49 @@
 	<script src ='//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js'></script>
 	<script src="../static/js/main.js"></script>
 	<script src="../static/js/models/user.js"></script>
+	<script src="../static/js/models/course.js"></script>
 	<script src="../static/js/collections/users.js"></script>
 	<script src="../static/js/routers/router.js"></script>
-	<title>wikiGolf</title>
-	<script>
-	document.getElementById("newLink").style.display = 'none'
-
+	<script>$( document ).ready(function () {
+				$("iframe").load(function() {
+    				$("iframe").contents().find("a").each(function(index) {
+        				$(this).on("click", function(event) {
+            				event.preventDefault();
+            				event.stopPropagation();
+        				});
+    				});
+				});
+			});
 	</script>
+
+	<title>wikiGolf</title>
+
 </head>
 <body>
-	<div id="Main">
-		<h1> Welcome to {{entries.title}} </h1>
-		<p> Get from one Wikipedia page to another in as few strokes(links) as you can. </p>
-		<a id="newLink" href="/#second">Load Wiki Pages<a>
-		<div id="wikiPageentry"> {{entries.wikiPage}} </div>
-		<iframe src="http://en.wikipedia.org/wiki/Sam_Younger"  id="iframe1" marginheight="0" frameborder="0"></iframe>
+	<header>
+  		<div class="inner-wrapper">
+          <h1> Welcome to {{entries.title}}</h1>
+      </div>
+  </header>
+	<div id="main">
+
+
+		<h2> Get from one Wikipedia page to another in as few strokes(links) as you can. </h2>
+	
+		<p> Displaying links for the Wikipedia page "{{entries.wikiTitle}}"</p>
+		<a id="newLink" href="/#one">Backbone #one<a>
+		<a id="newLink2" href="/#second">Backbone #second<a>
+		
+		<ul>
+			{% for link in entries.links %}
+			<li><a href="/#wiki/{{link}}">{{link}}</a></li>
+			{% endfor %}
+		</ul>
+
+		<!--<div id="wikiPageentry"> {{entries.wikiPage}} </div>-->
+		<iframe src="http://en.wikipedia.org/wiki/javascript"  id="iframe1" marginheight="0" frameborder="0">
+
+		</iframe>
 		<div id="logo">
 			<img  src="static/img/Logo.png" alt="wikiGolf"  id="logo"/>
 			<div id= "Black-Background"></div>

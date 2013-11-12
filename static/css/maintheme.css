@@ -1,19 +1,41 @@
 #iframe1 {
 	height: 500px;
-	width: 960px;
+	width: 940px;
+	border: 1px solid #C4C4C4;
+	padding: 4px;
+	background: #FFF;
+	margin-top: 10px;
 }
 
-h1, p {
-	font-family: Verdana, arial, sans-serif ;
-	text-align: center;
+h1 {
+	/* font-family: Verdana, arial, sans-serif ; */
+	/* text-align: center; */
+	font-weight: 200;
+	margin: 0;
+	color: #FFF;
+	padding: 8px 0;
+	text-shadow: 1px 1px #000;
+}
+
+h2 {
+	/* text-align: center; */
+	font-family: arial, sans-serif ;
+	font-weight: 200;
+	/* margin: 0; */
 }
 
 body {
-	background-image: url("../img/wild_flowers.png");
+    background: #F5F5F5;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    margin-left: auto;
+    margin-right: auto;
+    margin: 0;
+    padding: 0;
+    position: relative;
 }
 
-#Main {
-	width : 960px;
+#main {
+	max-width: 960px;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -46,4 +68,15 @@ img {
 	top: -105px;
 
 	z-index: 1;
+}
+
+header {
+    /* height: 50px; */
+    background-color: rgb(54, 204, 17);
+    border-bottom: 1px solid #CCC;
+    box-shadow: 1px 2px rgba(218, 218, 218, 0.71);
+}
+.inner-wrapper {
+    max-width: 960px;
+    margin: 0 auto;
 }

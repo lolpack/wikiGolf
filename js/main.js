@@ -1,1 +1,0 @@
-var APP = window.APP = {};
