@@ -2,14 +2,24 @@ from flask import Flask, render_template, Markup, request, Response
 import jinja2
 import wikipedia as W
 import json
+from string import replace
+
 app = Flask(__name__)
 
-def loadWikiPage():
-	random = W.random()
-	randomPage = W.page(random)
-	return randomPage.links, randomPage.title
+def loadRandWikiPage():
+	
+	try:
+		random = W.random()
+		randomPage = W.page(random)
+		return randomPage.links, randomPage.title
+	except:
+		loadRandWikiPage()
 
-links_title = loadWikiPage()
+def loadGivenWikiPage(page):
+	Page = W.page(page)
+	return Page.links, Page.title
+
+links_title = loadRandWikiPage()
 
 coursePath = []
 
@@ -35,7 +45,8 @@ def getJSON():
 @app.route("/nextWiki", methods= ['POST', 'GET'])
 def nextWiki():
 	if request.method == 'POST':
-		print request.json
+		withUnderscores = replace( request.json["Page"] , " " , "_" )
+		print loadGivenWikiPage( withUnderscores )
 		return "Success"
 
 if __name__ == "__main__":

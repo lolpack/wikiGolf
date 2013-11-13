@@ -66,8 +66,6 @@ img {
 	background-color: black;
 	height: 100px;
 	position: relative;
-	top: -105px;
-	bottom: 0px;
 	z-index: 1;
 }
 
@@ -80,4 +78,28 @@ header {
 .inner-wrapper {
     max-width: 960px;
     margin: 0 auto;
+}
+
+li a {
+    /* list-style-type: none; */
+    padding: 5px 10px;
+    /* margin: 10px; */
+    /* float: left; */
+    text-decoration: none;
+    color: rgb(107, 141, 0);
+    border-radius: 4px;
+    background-color: #E7E7E7;
+    transition: background-color .1s linear;
+}
+
+li {
+    list-style-type: none;
+    float: left;
+    margin: 10px 10px 10px 0;
+}
+li a:hover {
+    background-color: #CCC;
+}
+.Float-Left {
+    margin: 10px 0;
 }

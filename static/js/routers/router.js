@@ -27,9 +27,9 @@ APP.Router = Backbone.Router.extend({
 
 	},
 	newPageLoader : function (page) {
-		APP.coureseCollection = new APP.CoursesCollection();
-		APP.coureseCollection.add([page]);
-		console.log(APP.coureseCollection);
+		APP.couresCollection = new APP.CoursesCollection();
+		APP.couresCollection.create({Page:page});
+		console.log(APP.couresCollection);
 
 	}
 

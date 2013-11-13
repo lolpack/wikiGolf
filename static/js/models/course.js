@@ -1,10 +1,10 @@
 APP.Course = Backbone.Model.extend({
-	defaults: {
-		
+	defaults: function (){
+		return {
 			startPage: null,
 			endPage: null,
 			par: null,
-		
+		};
 	}
 
 });
