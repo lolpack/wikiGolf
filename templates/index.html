@@ -8,26 +8,30 @@
 	<script src ='//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js'></script>
 	<script src ='//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js'></script>
 	<script src="../static/js/main.js"></script>
+
 	<script src="../static/js/models/user.js"></script>
 	<script src="../static/js/models/course.js"></script>
-	<script src="../static/js/collections/users.js"></script>
 	<script src="../static/js/collections/courses.js"></script>
-		<script src="../static/js/views/Courses_View.js"></script>
-
+	<script src="../static/js/views/Courses_View.js"></script>
+	<script src="../static/js/collections/users.js"></script>
 	<script src="../static/js/views/user_view.js"></script>
 	<script src="../static/js/views/courseItemview.js"></script>
 		<script src="../static/js/routers/router.js"></script>
 
 	<script>$( document ).ready(function () {
-				$("iframe").load(function() {
-    				$("iframe").contents().find("a").each(function(index) {
-        				$(this).on("click", function(event) {
-            				event.preventDefault();
-            				event.stopPropagation();
-        				});
-    				});
-				});
+		$("#coursePickerForm").submit(function(e){
+    		return false;
 			});
+		$('#submitButton').on('click', function () {
+			var buttonVal = $('input[type="radio"]:checked').val();
+			if (buttonVal) {
+				APP.router.navigate('#course/' + buttonVal, {trigger: true, replace: true})
+			} else {
+				return false;
+			}
+			})
+		});
+
 	</script>
 
 	<title>wikiGolf</title>
@@ -44,16 +48,31 @@
 
 		<h2> Get from one Wikipedia page to another in as few strokes (links) as you can. </h2>
 	
-		<p> Displaying links for the Wikipedia page "{{entries.wikiTitle}}"</p>
-		<a id="newLink" href="/#first">Backbone #one></a>
-		<a id="newLink2" href="/#second">Show Wiki Links></a>
+		<p id="wikiTitle"> Displaying links for the Wikipedia page "{{entries.wikiTitle}}"</p>
+		
+		<div id="courseForm">
+			<form id="coursePickerForm">
+				
+				<label for= "coursePicker1">
+					<input type="radio" name="course" value="par1" id="coursePicker1">Par 1 
+				</label><br>
+				<label for= "coursePicker2">
+					<input type="radio" name="course" value="par2" id="coursePicker2">Par 2
+				</label><br>
+				<label for= "coursePicker3">
+					<input type="radio" name="course" value="par3" id="coursePicker3">Par 3
+				</label><br>
+				<label for= "coursePicker4">
+					<input type="radio" name="course" value="random" id="coursePicker4">Random
+				</label><br>
+				<input type="submit" value="Tee Off !" id="submitButton" class= "coursePickerSubmit">
+				
+
+			</form>
+		</div>
 
 
 
-		<!--<div id="wikiPageentry"> {{entries.wikiPage}} </div>
-		<iframe src="http://en.wikipedia.org/wiki/javascript"  id="iframe1" marginheight="0" frameborder="0">
-
-		</iframe>-->
 
 	<div id="linksGoHere">
 	</div>

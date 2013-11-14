@@ -69,6 +69,10 @@ img {
 	z-index: 1;
 }
 
+#coursePickerForm input {
+	margin : 10px;
+}
+
 header {
     /* height: 50px; */
     background-color: rgb(54, 204, 17);
@@ -102,4 +106,32 @@ li a:hover {
 }
 .Float-Left {
     margin: 10px 0;
+}
+
+.coursePickerSubmit {
+	-moz-box-shadow:inset 0px 0px 0px -17px #bee2f9;
+	-webkit-box-shadow:inset 0px 0px 0px -17px #bee2f9;
+	box-shadow:inset 0px 0px 0px -17px #bee2f9;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #63EE84), color-stop(1, #58A21F) );
+	background:-moz-linear-gradient( center top, #67CF46 5%, #468ccf 100% );
+
+	-moz-border-radius-topleft:24px;
+
+	-moz-border-radius-topright:24px;
+
+
+	-moz-border-radius-bottomright:24px;
+
+	-moz-border-radius-bottomleft:24px;
+
+	display:inline-block;
+	color:white;
+	font-family: "Helvetica Neue", Helvetica, sans-serif;
+	font-size:23px;
+	font-weight:bold;
+	font-style:normal;
+	height:40px;
+	width:154px;
+	text-decoration:none;
+	text-align:center;
 }

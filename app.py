@@ -3,8 +3,23 @@ import jinja2
 import wikipedia as W
 import json
 import string
+import pymongo
+
+#Flask and Mongo Setup
 
 app = Flask(__name__)
+
+from pymongo import MongoClient
+client = MongoClient()
+
+client = MongoClient('localhost', 27017)
+db= client.wikiGolf
+posts = db.preLoadedCourses
+
+
+posts.insert
+
+print db.collection_names()
 
 class WikiPage():
 
@@ -30,14 +45,20 @@ links, title = WP.loadRandWikiPage() #First random wiki page for initial course 
 
 firstPage = title
 
+
+resp = []
+
 pager = [firstPage] #list of links that user clicked on
 
 coursePath = []
 
 
-def makeWikiObjects(): #Called after user clicks a link. Fetchs next batch of links for that page.
-	withUnderscores = string.replace(pager[len(pager)-1]  , " " , "_" )
-	links, t =  WP.loadGivenWikiPage( withUnderscores )
+def makeWikiObjects(random = False): #Creats a dictionary of links
+	if random:
+		links, t = WP.loadRandWikiPage() #Returns dict for a random page
+	else: 
+		withUnderscores = string.replace(pager[len(pager)-1]  , " " , "_" ) #Returns dict for a given page
+		links, t =  WP.loadGivenWikiPage( withUnderscores )
 	listObjects = []
 	id = 1
 	for link in links:
@@ -51,7 +72,7 @@ dab = [{"id":1,  "name": "First", "facebookPointer": None},
 
 @app.route("/")
 def main():
-	entries = {"title": "wikiGolf", "wikiPage": title, "wikiTitle": title, "links" : links }
+	entries = {"title": "wikiGolf", "wikiPage": title, "wikiTitle": title, "links" : links } #Loads index
 	return render_template('index.html', entries=entries)
 
 
@@ -64,18 +85,29 @@ def getJSON():
 	elif request.method == 'GET':
 		return Response(json.dumps(dab), content_type='application/json')
 
-@app.route("/nextWiki", methods= ['POST', 'GET'])
+@app.route("/nextWiki", methods= ['POST', 'GET']) #Route when you choose a course or click a link to the next page
 def nextWiki():
-
+	print request.json
 	if request.method == 'POST':
-		re = request
-
-		pager.append(request.json["next"])
+		if request.json["next"] == 'random':
+			resp.append(makeWikiObjects(random = True))
+		elif request.json["next"].startswith('par'):
+			resp.append(makeWikiObjects(random = True))
+		else:
+			pager.append(request.json["next"])
+			resp.append(makeWikiObjects())
 		print pager
-
-		return "Success"
+		return "Success!"
 	elif request.method == 'GET':
-		return Response(json.dumps(makeWikiObjects()), content_type='application/json')
+		return Response(json.dumps(resp[len(resp)-1]), content_type='application/json')
+
+@app.route("/fistCourse", methods = ['GET'])
+def firstCourse():
+	if request.method == 'GET':
+		if request.json == 'par1':
+			t = posts.find_one()
+			pager.append(t['par1'][0])
+			return Response(json.dumps(makeWikiObjects()), content_type='application/json')
 
 if __name__ == "__main__":
 	app.run(debug = True)

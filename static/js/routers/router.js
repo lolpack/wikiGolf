@@ -2,7 +2,8 @@ APP.Router = Backbone.Router.extend({
 	routes: {
 		"first": "firstRoute",
 		"second": "secondRouter",
-		"wiki/:page" : "newPageLoader"
+		"wiki/:page" : "newPageLoader",
+		"course/:courseChoice" : "pick_course"
 	},
 	firstRoute: function() {
 		alert("First route was hit");
@@ -31,16 +32,31 @@ APP.Router = Backbone.Router.extend({
 		$('#linksGoHere').html('');
 		APP.couresCollection.fetch({
 			success: function () {
-				APP.course = APP.CourseCollection;
+				var link = APP.couresCollection;
 				APP.course1view = new APP.CoursesView({
-					model: APP.course
+					collection: link
 				})
-                $('#linksGoHere').append(APP.course1view.render.el);
+                $('#linksGoHere').append(APP.course1view.render().el);
 			}
 
 	});
+	},
+	pick_course: function (courseChoice) {
+		APP.couresCollection = new APP.CoursesCollection();
+		APP.couresCollection.create({next:courseChoice});
+		console.log(APP.couresCollection);
+		APP.couresCollection.fetch({
+			success: function () {
+				var link = APP.couresCollection;
+				APP.course1view = new APP.CoursesView({
+					collection: link
+				})
+				$('#courseForm').html('');
+                $('#linksGoHere').append(APP.course1view.render().el);
+			}
 
-}
+	});
+	}
 
 });
 
