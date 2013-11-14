@@ -4,6 +4,8 @@ APP.Course = Backbone.Model.extend({
 			startPage: null,
 			endPage: null,
 			par: null,
+			content: "No content for this page",
+			next: null
 		};
 	}
 

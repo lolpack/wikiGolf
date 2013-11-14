@@ -10,28 +10,38 @@ APP.Router = Backbone.Router.extend({
 
 	},
 	secondRouter: function () {
-		APP.usersCollection = new APP.Users();
-		APP.usersCollection.fetch({
+		APP.CourseCollection = new APP.CoursesCollection();
+		APP.CourseCollection.fetch({
 			success: function () {
-				APP.user1 = APP.usersCollection.get(3);
-				APP.user1view = new APP.UserView({
-					model: APP.user1
-				})
-				APP.user1view.render();
-                $('#main').append(APP.user1view.$el);
-                console.log(APP.usersCollection.get(3));
-			}
-		});
-
-		
-
+					var link = APP.CourseCollection;
+					var newView = new APP.CoursesView({
+					collection: link
+				
+				});
+				$('#linksGoHere').append(newView.render().el);
+				console.log(newView);
+			
+		}
+	});
 	},
 	newPageLoader : function (page) {
 		APP.couresCollection = new APP.CoursesCollection();
-		APP.couresCollection.create({Page:page});
+		APP.couresCollection.create({next:page});
 		console.log(APP.couresCollection);
+		$('#linksGoHere').html('');
+		APP.couresCollection.fetch({
+			success: function () {
+				APP.course = APP.couresCollection.get(1);
+				APP.course1view = new APP.CourseItemView({
+					model: APP.course
+				})
+				APP.course1view.render();
+                $('#linksGoHere').append(APP.course1view.$el);
+			}
 
-	}
+	});
+
+}
 
 });
 
