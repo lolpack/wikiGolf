@@ -31,12 +31,11 @@ APP.Router = Backbone.Router.extend({
 		$('#linksGoHere').html('');
 		APP.couresCollection.fetch({
 			success: function () {
-				APP.course = APP.couresCollection.get(1);
-				APP.course1view = new APP.CourseItemView({
+				APP.course = APP.CourseCollection;
+				APP.course1view = new APP.CoursesView({
 					model: APP.course
 				})
-				APP.course1view.render();
-                $('#linksGoHere').append(APP.course1view.$el);
+                $('#linksGoHere').append(APP.course1view.render.el);
 			}
 
 	});

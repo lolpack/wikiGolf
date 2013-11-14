@@ -10,7 +10,7 @@ class WikiPage():
 
 
 	def loadRandWikiPage(self):
-		
+		"""Grabs a random wiki page for start and end of course"""
 
 		random = W.random()
 		self.randomPage = W.page(random)
@@ -18,20 +18,32 @@ class WikiPage():
 		return self.randomPage.links, self.randomPage.title
 
 	def loadGivenWikiPage(self, page):
+		"""Grabs a specified wiki page"""
+
 		self.Page = W.page(page)
 		print self.Page.title
 		return self.Page.links, self.Page.title
 
 WP = WikiPage()
 
-pager = []
+links, title = WP.loadRandWikiPage() #First random wiki page for initial course load
 
-links, title = WP.loadRandWikiPage()
+firstPage = title
 
-
+pager = [firstPage] #list of links that user clicked on
 
 coursePath = []
 
+
+def makeWikiObjects(): #Called after user clicks a link. Fetchs next batch of links for that page.
+	withUnderscores = string.replace(pager[len(pager)-1]  , " " , "_" )
+	links, t =  WP.loadGivenWikiPage( withUnderscores )
+	listObjects = []
+	id = 1
+	for link in links:
+		listObjects.append({"id":id, "name":link})
+		id += 1
+	return listObjects
 
 dab = [{"id":1,  "name": "First", "facebookPointer": None},
 		{"id": 2, "name": "John"},
@@ -57,17 +69,13 @@ def nextWiki():
 
 	if request.method == 'POST':
 		re = request
-		print request.method
+
 		pager.append(request.json["next"])
 		print pager
 
 		return "Success"
 	elif request.method == 'GET':
-		#print pager
-		#withUnderscores = string.replace(pager[0]  , " " , "_" )
-		#loaded =  WP.loadGivenWikiPage( withUnderscores )
-		#print str(loaded[0]) + "somthings"
-		return Response(json.dumps([{"id":2,  "next": "Link2"},{"id":1,  "next": "Link2"}]), content_type='application/json')
+		return Response(json.dumps(makeWikiObjects()), content_type='application/json')
 
 if __name__ == "__main__":
 	app.run(debug = True)

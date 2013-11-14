@@ -32,7 +32,7 @@ APP.CourseItemView = Backbone.View.extend({
         }, */
         //renders html for userView
         //template: _.template(list, {links: ['moe', 'curly', 'larry']}),
-                template : _.template("<li> <a href='/#wiki/<%= next %>' ><%= next %></a> </li>"),
+                template : _.template("<li> <a href='/#wiki/<%= name %>' ><%= name %></a> </li>"),
 
         render : function () {
                 var html = this.model.toJSON();
