@@ -16,6 +16,7 @@
 	<script src="../static/js/collections/users.js"></script>
 	<script src="../static/js/views/user_view.js"></script>
 	<script src="../static/js/views/courseItemview.js"></script>
+	<script src="../static/js/views/courseTitle.js"></script>
 		<script src="../static/js/routers/router.js"></script>
 
 	<script>$( document ).ready(function () {
@@ -40,16 +41,15 @@
 <body>
 	<header>
   		<div class="inner-wrapper">
-          <h1> Welcome to {{entries.title}}</h1>
+          <h1 id="welcome"> Welcome to <a href="/" id="Header">wikiGolf</a></h1>
+          <p id="Facebook"> Sign in with facebook</p>
       </div>
   </header>
-	<div id="main">
-
-
-		<h2> Get from one Wikipedia page to another in as few strokes (links) as you can. </h2>
+  	<h2 id="instructions">Pick a course and try to get from one Wikipedia page to another with as few links as possible. </h2>
 	
-		<p id="wikiTitle"> Displaying links for the Wikipedia page "{{entries.wikiTitle}}"</p>
-		
+	<div id="wikiTitle">
+	</div>
+	<div id="main">
 		<div id="courseForm">
 			<form id="coursePickerForm">
 				

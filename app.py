@@ -17,8 +17,6 @@ db= client.wikiGolf
 posts = db.preLoadedCourses
 
 
-posts.insert
-
 print db.collection_names()
 
 class WikiPage():
@@ -41,46 +39,43 @@ class WikiPage():
 
 WP = WikiPage()
 
-links, title = WP.loadRandWikiPage() #First random wiki page for initial course load
+links1, title1 = WP.loadRandWikiPage() #First random wiki page for initial course load
+links2, title2 = WP.loadRandWikiPage() #Page that the user needs to end up on
 
-firstPage = title
+
+firstPage = title1
 
 
 resp = []
 
 pager = [firstPage] #list of links that user clicked on
 
-coursePath = []
+coursePath = {"startPage": firstPage, "endPage": title2}
 
 
 def makeWikiObjects(random = False): #Creats a dictionary of links
 	if random:
-		links, t = WP.loadRandWikiPage() #Returns dict for a random page
+		links, title = WP.loadRandWikiPage() #Returns dict for a random page
 	else: 
 		withUnderscores = string.replace(pager[len(pager)-1]  , " " , "_" ) #Returns dict for a given page
-		links, t =  WP.loadGivenWikiPage( withUnderscores )
+		links, title =  WP.loadGivenWikiPage( withUnderscores )
 	listObjects = []
 	id = 1
 	for link in links:
-		listObjects.append({"id":id, "name":link})
+		listObjects.append({"id":id, "name":link, "current": title})
 		id += 1
 	return listObjects
 
-dab = [{"id":1,  "name": "First", "facebookPointer": None},
-		{"id": 2, "name": "John"},
-		{"id": 3, "name": links}]
+
 
 @app.route("/")
 def main():
-	entries = {"title": "wikiGolf", "wikiPage": title, "wikiTitle": title, "links" : links } #Loads index
-	return render_template('index.html', entries=entries)
+	return render_template('index.html')
 
 
 @app.route("/users", methods = ['POST', 'GET'])
 def getJSON():
 	if request.method == 'POST':
-		dab.append(request.json)
-		print dab
 		return "Success!"
 	elif request.method == 'GET':
 		return Response(json.dumps(dab), content_type='application/json')
@@ -96,6 +91,7 @@ def nextWiki():
 		else:
 			pager.append(request.json["next"])
 			resp.append(makeWikiObjects())
+		print resp
 		print pager
 		return "Success!"
 	elif request.method == 'GET':

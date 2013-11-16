@@ -1,20 +1,12 @@
 APP.CourseItemView = Backbone.View.extend({
         tagName: 'li',
         events: {
-                "click li": "alertStatus",
-                "dblclick" : "RemoveP",
-                "mouseover h1" : "mouseoverH"
+                "click li": "alertStatus"
 
         },
         alertStatus: function(e){
-                alert('Hey you clicked the li!');
-        
-        },
-        RemoveP: function () {
-                $('p').html("TEEHEE");
-        },
-        mouseoverH : function () {
-                $('h1').console.log("See you");
+                console.log('Hey you clicked the li!');
+
         },
 /*        initialize: function () {
         
@@ -32,7 +24,7 @@ APP.CourseItemView = Backbone.View.extend({
         }, */
         //renders html for userView
         //template: _.template(list, {links: ['moe', 'curly', 'larry']}),
-                template : _.template("<li> <a href='/#wiki/<%= name %>' ><%= name %></a> </li>"),
+        template : _.template("<li> <a href='/#wiki/<%= name %>' ><%= name %></a> </li>"),
 
         render : function () {
                 var html = this.model.toJSON();
