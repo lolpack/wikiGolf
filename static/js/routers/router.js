@@ -31,6 +31,7 @@ APP.Router = Backbone.Router.extend({
 		console.log(APP.couresCollection);
 		$('#linksGoHere').html('');
 		$('#wikiTitle').html('');
+		$('#startFinish').html('');
 		APP.course = new APP.Course();
 
 		APP.couresCollection.fetch({
@@ -45,6 +46,10 @@ APP.Router = Backbone.Router.extend({
                 	model: currentCourse
                 })
                 $('#wikiTitle').append(APP.courseTitle.render().el);
+                APP.startFinish = new APP.StartFinish({
+                	model: currentCourse
+                })
+                $('#startFinish').append(APP.startFinish.render().el);
 			}
 
 	});
@@ -62,6 +67,15 @@ APP.Router = Backbone.Router.extend({
 				$('#courseForm').html('');
 				$('#instructions').html('');
                 $('#linksGoHere').append(APP.course1view.render().el);
+                var currentCourse = link.get(1);
+                APP.courseTitle = new APP.CourseTitle({
+                	model: currentCourse
+                })
+                $('#wikiTitle').append(APP.courseTitle.render().el);
+                APP.startFinish = new APP.StartFinish({
+                	model: currentCourse
+                })
+                $('#startFinish').append(APP.startFinish.render().el);
 			}
 
 	});
