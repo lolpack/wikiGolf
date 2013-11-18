@@ -3,9 +3,11 @@ APP.Course = Backbone.Model.extend({
 		return {
 			startPage: null,
 			endPage: null,
-			par: null,
 			current: null,
-			next: null
+			next: null,
+			id: null,
+			gameOver: false,
+			coursePath: null
 		};
 	}
 

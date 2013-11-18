@@ -12,13 +12,15 @@
 	<script src="../static/js/models/user.js"></script>
 	<script src="../static/js/models/course.js"></script>
 	<script src="../static/js/collections/courses.js"></script>
-	<script src="../static/js/views/Courses_View.js"></script>
 	<script src="../static/js/collections/users.js"></script>
+	<script src="../static/js/views/Courses_View.js"></script>
+
 	<script src="../static/js/views/user_view.js"></script>
 	<script src="../static/js/views/startFinishView.js"></script>
 	<script src="../static/js/views/courseItemview.js"></script>
 	<script src="../static/js/views/courseTitle.js"></script>
-		<script src="../static/js/routers/router.js"></script>
+	<script src="../static/js/views/coursePath.js"></script>
+	<script src="../static/js/routers/router.js"></script>
 
 	<script>$( document ).ready(function () {
 		$("#coursePickerForm").submit(function(e){
@@ -44,6 +46,7 @@
   		<div class="inner-wrapper">
           <h1 id="welcome"> Welcome to <a href="/" id="Header">wikiGolf</a></h1>
           <img src="static/img/fblogin.png" id="Facebook"/>
+          <div id="strokes"></div>
       </div>
   </header>
   	<h2 id="instructions">Pick a course and try to get from one Wikipedia page to another with as few links as possible. </h2>
@@ -53,7 +56,10 @@
 
 	<div id="wikiTitle">
 	</div>
-	
+
+	<div id="coursePath">
+	</div>
+
 	<div id="main">
 		<div id="courseForm">
 			<form id="coursePickerForm">

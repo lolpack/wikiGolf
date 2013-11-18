@@ -1,13 +1,12 @@
-APP.User = Backbone.Model.extend({
+APP.UserModel = Backbone.Model.extend({
 
 	defaults: function () {
 		return {
-		id: null,
+		id: 1,
 		name: null,
-		curStrokes: 0,
-		games_played: 0,
+		strokes: 0,
 		facebookPointer: null,
-		//coursePlayed: [{course: 0, strokeCount: 0}] Coming soon
+		history: null
 		};
 	}
 });

@@ -31,7 +31,7 @@ h1 {
 	width: 205px;
 }
 
-h2, h3 {
+h2, h3, #coursePath {
 
 	font-family: arial, sans-serif ;
 	font-weight: 200;
