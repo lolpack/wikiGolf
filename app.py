@@ -113,7 +113,7 @@ class Game():
 		for link in links:
 			self.listObjects.append({"id":id, "name":link, "current": self.title, "startPage":self.startPage,
 									 "endPage": self.endPage, "gameOver" : self.checkWinner(), "coursePath": self.courseLinks,
-									 "courseContent": "self.W.contentWithLinks()"})
+									 "courseContent": None}) #"self.W.contentWithLinks()"
 			id += 1
 		return self.listObjects
 
@@ -180,4 +180,4 @@ def firstCourse():
 			return Response(json.dumps(makeWikiObjects()), content_type='application/json')
 
 if __name__ == "__main__":
-	app.run(debug = True)
+	app.run()
