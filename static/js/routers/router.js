@@ -3,7 +3,8 @@ APP.Router = Backbone.Router.extend({
 		"first": "firstRoute",
 		"second": "secondRouter",
 		"wiki/:page" : "newPageLoader",
-		"course/:courseChoice" : "pick_course"
+		"course/:courseChoice" : "pick_course",
+		"stats" : "gameOver"
 	},
 	firstRoute: function() {
 		alert("First route was hit");
@@ -31,7 +32,6 @@ APP.Router = Backbone.Router.extend({
 		$('#linksGoHere').html('');
 		$('#wikiTitle').html('');
 		$('#startFinish').html('');
-		$('#coursePath').html('');
 		$('#strokes').html('');
 		APP.course = new APP.Course();
 
@@ -39,8 +39,10 @@ APP.Router = Backbone.Router.extend({
 			success: function () {
 				var gameState = APP.couresCollection.get(1);
 				if (gameState.attributes.gameOver === true) {
-					window.location = 'stats'
+					APP.router.navigate('#stats', {trigger: true, replace: true})//Check if game is over, send to congrats screen
+					
 				} else {
+					$('#coursePath').html('');
 					console.log(gameState.attributes.gameOver);
 					var link = APP.couresCollection;
 					APP.course1view = new APP.CoursesView({
@@ -85,6 +87,7 @@ APP.Router = Backbone.Router.extend({
 		console.log(APP.couresCollection);
 		APP.couresCollection.fetch({
 			success: function () {
+				$('#strokes').html('');
 				var link = APP.couresCollection;
 				APP.course1view = new APP.CoursesView({
 					collection: link
@@ -106,6 +109,10 @@ APP.Router = Backbone.Router.extend({
                 	model: currentCourse
                 })
                 $('#coursePath').append(APP.coursePath.render().el);
+                APP.courseContent = new APP.CourseContent({
+                	model: currentCourse
+                })
+                $('#wikiContent').append(APP.courseContent.render().el);
 			}
 
 			});
@@ -122,6 +129,12 @@ APP.Router = Backbone.Router.extend({
 
 			}
 		})
+	},
+	gameOver: function () {
+		var course = APP.couresCollection.get(1);
+		console.log(APP.userCollection);
+		$('#startFinish').html('<h2>Congrats! You made it from '+ course.get('startPage') + ' to ' + course.get('endPage')+ '</h2>');
+		$('#wikiTitle').html('<h3><a href="/">Start Over!</a></h3>');
 	}
 
 });

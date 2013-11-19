@@ -1,5 +1,5 @@
 APP.UserView = Backbone.View.extend({
-        tagName: 'p',
+        tagName: 'div',
 
         render : function () {
 			this.$el.html("Stroke Count: " + this.model.get('strokes'));

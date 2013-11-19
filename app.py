@@ -8,6 +8,7 @@ import random
 
 #Flask and Mongo Setup
 
+
 app = Flask(__name__)
 
 from pymongo import MongoClient
@@ -20,16 +21,18 @@ preCourses = db.preLoadedCourses
 
 class WikiPage():
 
+	def __init__(self):
+		self.pageCon = None
 
 	def loadRandWikiPage(self):
 		"""Grabs a random wiki page for start and end of course.
 		Returns tuple: links first position, title second"""
 
-		random = W.random()
-		self.randomPage = W.page(random)
+		Random1 = W.random()
+		self.randomPage = W.page(Random1)
 		if self.randomPage.title:
-			print self.randomPage.title
 			print type(self.randomPage.title)
+			self.pageCon = self.randomPage.content
 			return self.randomPage.links, self.randomPage.title
 		else:
 			print "Not valid"
@@ -40,27 +43,29 @@ class WikiPage():
 
 		self.Page = W.page(page)
 		if self.Page.title:
-			print self.Page.title
+			print type(self.Page.title)
+			self.pageCon = self.Page.content
 			return self.Page.links, self.Page.title
 		else: 
 			print "Not Valid"
 
-	def contentWithLinks(self, Random = True):
+	def contentWithLinks(self, page = None, Random = True):
 		"""Goes through the list of links associated with a  page
 		and finds the instances of those words in a plain test version
 		of the page."""
 
 		if Random:
-			pageContent = self.randomPage.content
-
-			for link in self.randomPage.links:
+			links, title = self.loadRandWikiPage()
+			pageContent = self.pageCon
+			for link in links:
 				if link in pageContent:
-					pageContent = string.replace(pageContent, link, "<a href='#wiki/{link}'>{link}</a>".format(link=link))
+					pageContent = pageContent.replace( link, u"<a href='#wiki/{link}'>{link}</a>".format(link=link)).encode("utf-8")
 		else:
-			pageContent = self.Page.content
-			for link in self.Page.links:
+			links, title = self.loadGivenWikiPage(page)
+			pageContent = self.pageCon
+			for link in links:
 				if link in pageContent:
-					pageContent = string.replace(pageContent, link, "<a href='#wiki/{link}'>{link}</a>".format(link=link))
+					pageContent = pageContent.replace( link, u"<a href='#wiki/{link}'>{link}</a>".format(link=link)).encode("utf-8")
 		return pageContent
 
 class Game():
@@ -90,22 +95,25 @@ class Game():
 			self.courseLinks.append(self.startPage)
 
 	def checkWinner(self):
-		if self.courseLinks[len(self.courseLinks) - 1] == self.endPage:
+		if self.title == self.endPage:
 			return True
 		else:
 			return False
 
 	def makeWikiObjects(self, random = False): #Creats a dictionary of links
 		if random:
-			links, title = self.startLinks, self.startPage #Returns dict for a random page
+			links, self.title = self.startLinks, self.startPage #Returns dict for a random page
+			page = None
 		else: 
-			withUnderscores = string.replace(self.courseLinks[len(self.courseLinks)-1]  , " " , "_" ) #Returns dict for a given page
-			links, title =  WP.loadGivenWikiPage( withUnderscores )
+			page = self.courseLinks[len(self.courseLinks)-1] 
+			withUnderscores = string.replace(page  , " " , "_" ) #Returns dict for a given page
+			links, self.title =  WP.loadGivenWikiPage( withUnderscores )
 		self.listObjects = []
 		id = 1
 		for link in links:
-			self.listObjects.append({"id":id, "name":link, "current": title, "startPage":self.startPage,
-									 "endPage": self.endPage, "gameOver" : self.checkWinner(), "coursePath": self.courseLinks})
+			self.listObjects.append({"id":id, "name":link, "current": self.title, "startPage":self.startPage,
+									 "endPage": self.endPage, "gameOver" : self.checkWinner(), "coursePath": self.courseLinks,
+									 "courseContent": "self.W.contentWithLinks()"})
 			id += 1
 		return self.listObjects
 
@@ -158,14 +166,10 @@ def nextWiki():
 			user.strokes += 1
 		print "Course path: "+ str(game.courseLinks)
 		print "Winner?????" + str(game.checkWinner())
-		#print WP.contentWithLinks()
+		
 		return "Success!"
 	elif request.method == 'GET':
 		return Response(json.dumps(game.coursePath.pop()), content_type='application/json') #Return JSON data from game course array
-
-@app.route("/stats")
-def stats():
-	return render_template('gameEnd.html')
 
 @app.route("/fistCourse", methods = ['GET']) #Deprecated
 def firstCourse():
@@ -177,4 +181,3 @@ def firstCourse():
 
 if __name__ == "__main__":
 	app.run(debug = True)
-

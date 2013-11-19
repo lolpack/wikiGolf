@@ -4,23 +4,32 @@
 	<meta charset="UTF-8">
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 	<script type="text/javascript" src='../static/js/mainpage.js'></script>
-	<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/maintheme.css') }}" />
+	<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/maintheme.css') }}" /> 
 	<script src ='//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js'></script>
 	<script src ='//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js'></script>
 	<script src="../static/js/main.js"></script>
+
+	<!-- load Jquery, Backbone, Underscore, CSS and main JS file -->
 
 	<script src="../static/js/models/user.js"></script>
 	<script src="../static/js/models/course.js"></script>
 	<script src="../static/js/collections/courses.js"></script>
 	<script src="../static/js/collections/users.js"></script>
-	<script src="../static/js/views/Courses_View.js"></script>
 
+	<!-- Load Backbone Models and collections -->
+	
+	<script src="../static/js/views/Courses_View.js"></script>
 	<script src="../static/js/views/user_view.js"></script>
 	<script src="../static/js/views/startFinishView.js"></script>
 	<script src="../static/js/views/courseItemview.js"></script>
 	<script src="../static/js/views/courseTitle.js"></script>
 	<script src="../static/js/views/coursePath.js"></script>
+	<script src="../static/js/views/courseContent.js"></script>	
 	<script src="../static/js/routers/router.js"></script>
+
+	<!-- Load Views and router-->
+
+	<link rel="icon" type="image/ico" href="static/img/favicon.ico"/>
 
 	<script>$( document ).ready(function () {
 		$("#coursePickerForm").submit(function(e){
@@ -29,11 +38,15 @@
 		$('#submitButton').on('click', function () {
 			var buttonVal = $('input[type="radio"]:checked').val();
 			if (buttonVal) {
-				APP.router.navigate('#course/' + buttonVal, {trigger: true, replace: true})
+				APP.router.navigate('#course/' + buttonVal, {trigger: true, replace: true}); //Logic to load course from server
+				$('#fixed-status').css("display", "show" );
 			} else {
 				return false;
 			}
 			})
+		$(window).on('scroll', function () {
+			$('#fixed-status').css("top","0px");
+		})
 		});
 
 	</script>
@@ -44,11 +57,16 @@
 <body>
 	<header>
   		<div class="inner-wrapper">
-          <h1 id="welcome"> Welcome to <a href="/" id="Header">wikiGolf</a></h1>
-          <img src="static/img/fblogin.png" id="Facebook"/>
-          <div id="strokes"></div>
-      </div>
+          <h1 id="welcome"><a href="/" id="Header">wikiGolf</a></h1>
+          <fb:login-button show-faces="true" width="200" max-rows="1" id="Facebook"></fb:login-button>
+      	</div>
   </header>
+  	<div class="fixed-status">
+  		<div id="inner-div">
+  		<span id="strokes">A classy game of trivia, connection and finding your own path</span>
+  		<span id="coursePath"></span>
+  	</div>
+  	</div>
   	<h2 id="instructions">Pick a course and try to get from one Wikipedia page to another with as few links as possible. </h2>
 	
 	<div id="startFinish">
@@ -57,21 +75,23 @@
 	<div id="wikiTitle">
 	</div>
 
-	<div id="coursePath">
+	<div id="wikiContent">
 	</div>
+
+
 
 	<div id="main">
 		<div id="courseForm">
 			<form id="coursePickerForm">
 				
 				<label for= "coursePicker1">
-					<input type="radio" name="course" value="par1" id="coursePicker1">Par 1 
+					<input type="radio" name="course" value="par3" id="coursePicker1">Par 3 
 				</label><br>
 				<label for= "coursePicker2">
-					<input type="radio" name="course" value="par2" id="coursePicker2">Par 2
+					<input type="radio" name="course" value="par4" id="coursePicker2">Par 4
 				</label><br>
 				<label for= "coursePicker3">
-					<input type="radio" name="course" value="par3" id="coursePicker3">Par 3
+					<input type="radio" name="course" value="par5" id="coursePicker3">Par 5
 				</label><br>
 				<label for= "coursePicker4">
 					<input type="radio" name="course" value="random" id="coursePicker4">Random
@@ -92,5 +112,48 @@
 		<footer>
 			<div id= "Black-Background"><img  src="static/img/Logo.png" alt="wikiGolf"  id="logo"/></div>
 		</footer>
+
+<div id="fb-root"></div> 
+<script>
+//Facebook login logic
+  window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '1436048966616255',
+    status     : true, // check login status
+    cookie     : true, // enable cookies to allow the server to access the session
+    xfbml      : true  // parse XFBML
+  });
+ 
+  FB.Event.subscribe('auth.authResponseChange', function(response) {
+    // Here we specify what we do with the response anytime this event occurs. 
+    if (response.status === 'connected') {
+
+      testAPI();
+    } else if (response.status === 'not_authorized') {
+
+      FB.login();
+    } else {
+
+      FB.login();
+    }
+  });
+  };
+
+  (function(d){
+   var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+   if (d.getElementById(id)) {return;}
+   js = d.createElement('script'); js.id = id; js.async = true;
+   js.src = "//connect.facebook.net/en_US/all.js";
+   ref.parentNode.insertBefore(js, ref);
+  }(document));
+
+  function testAPI() {
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me', function(response) {
+      console.log('Good to see you, ' + response.name + '.');
+    });
+  }
+</script>
+
 </body>
 </html>

@@ -7,7 +7,8 @@ APP.Course = Backbone.Model.extend({
 			next: null,
 			id: null,
 			gameOver: false,
-			coursePath: null
+			coursePath: null,
+			courseContent: null
 		};
 	}
 
