@@ -83,7 +83,7 @@ class WikiPage():
 				pageContent = unicode(pageContent, errors='ignore')
 			if link in pageContent:
 				regex = re.compile(link)
-				pageContent = regex.sub(u"<a href='#wiki/{link}'>{link}</a>".format(link=link), pageContent, 1)
+				pageContent = regex.sub(u"<a href='#wiki/{link}'>{link}</a>".format(link=link), pageContent)
 				pageContent = pageContent.replace( '\n', u"<br>".format(link=link))
 
 		return pageContent
