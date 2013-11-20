@@ -126,10 +126,9 @@ APP.Router = Backbone.Router.extend({
 				$('#wikiTitle').html('<h3><a href="/">Start Over!</a></h3>');
 			}
 			});
-		};
+		}
 		
 
-	}
 
 });
 
