@@ -13,7 +13,6 @@ import os
 app = Flask(__name__)
 
 from pymongo import MongoClient
-client = MongoClient()
 
 client = MongoClient(os.environ('MONGOHQ_URL'))
 db= client.wikiGolf
