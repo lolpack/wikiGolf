@@ -5,6 +5,7 @@ import json
 import string
 import pymongo
 import random
+import os
 
 #Flask and Mongo Setup
 
@@ -14,7 +15,7 @@ app = Flask(__name__)
 from pymongo import MongoClient
 client = MongoClient()
 
-client = MongoClient('localhost', 27017)
+client = MongoClient(os.environ('MONGOHQ_URL'))
 db= client.wikiGolf
 preCourses = db.preLoadedCourses
 
@@ -28,8 +29,14 @@ class WikiPage():
 		"""Grabs a random wiki page for start and end of course.
 		Returns tuple: links first position, title second"""
 
-		Random1 = W.random()
-		self.randomPage = W.page(Random1)
+
+		try:
+			Random1 = W.random()
+			self.randomPage = W.page(Random1)
+		except:
+			Random1 = W.random()
+			self.randomPage = W.page(Random1)
+
 		if self.randomPage.title:
 			print type(self.randomPage.title)
 			self.pageCon = self.randomPage.content
@@ -41,7 +48,11 @@ class WikiPage():
 		"""Grabs a specified wiki page.
 		Returns tuple: links first position, title second"""
 
-		self.Page = W.page(page)
+		try:
+			self.Page = W.page(page)
+		except:
+			self.Page = W.page(page)
+
 		if self.Page.title:
 			print type(self.Page.title)
 			self.pageCon = self.Page.content
