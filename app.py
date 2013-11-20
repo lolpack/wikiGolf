@@ -135,6 +135,11 @@ class Game():
 									 "courseContent": content})
 		return self.listObjects
 
+	def clearGame(self):
+		self.user.strokes = 0
+		self.coursePath = []
+		self.courseLinks = []
+
 class User:
 
 	def __init__(self):
@@ -154,8 +159,7 @@ game = Game(WP, user)
 
 @app.route("/")
 def main():
-	game.courseLinks = []
-	user.strokes = 0
+	game.clearGame()
 	return render_template('index.html')
 
 
