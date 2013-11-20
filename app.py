@@ -15,7 +15,8 @@ app = Flask(__name__)
 from pymongo import MongoClient
 
 client = MongoClient(os.environ['MONGOHQ_URL'])
-db= client.wikiGolf
+
+db= client.get_default_database()
 preCourses = db.preLoadedCourses
 
 preCourses.insert({"this": "is a test"})
