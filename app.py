@@ -14,12 +14,21 @@ app = Flask(__name__)
 
 from pymongo import MongoClient
 
-client = MongoClient(os.environ['MONGOHQ_URL'])
+MONGO_URL = os.environ.get('MONGOHQ_URL')
+ 
+if MONGO_URL:
+    # Get a connection
+    client = MongoClient(MONGO_URL)
 
-db= client.get_default_database()
+    # Get the database
+    db= client.get_default_database()
+else:
+    # Not on an app with the MongoHQ add-on, do some localhost action
+    client = MongoClient('localhost', 27017)
+    db = client['wikiGolf']
+
+
 preCourses = db.preLoadedCourses
-
-preCourses.insert({"this": "is a test"})
 
 print preCourses.find_one()
 

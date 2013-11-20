@@ -82,12 +82,13 @@ APP.Router = Backbone.Router.extend({
 		})
 	},
 	pick_course: function (courseChoice) {
+		$('#strokes').html('');
 		APP.couresCollection = new APP.CoursesCollection();
 		APP.couresCollection.create({next:courseChoice});
 		console.log(APP.couresCollection);
 		APP.couresCollection.fetch({
 			success: function () {
-				$('#strokes').html('');
+
 				var link = APP.couresCollection;
 				APP.course1view = new APP.CoursesView({
 					collection: link
