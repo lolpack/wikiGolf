@@ -1,29 +1,8 @@
 APP.Router = Backbone.Router.extend({
 	routes: {
-		"first": "firstRoute",
-		"second": "secondRouter",
 		"wiki/:page" : "newPageLoader",
 		"course/:courseChoice" : "pick_course",
 		"stats" : "gameOver"
-	},
-	firstRoute: function() {
-		alert("First route was hit");
-		APP.userCollections = new APP.Users();
-
-	},
-	secondRouter: function () {
-		APP.CourseCollection = new APP.CoursesCollection();
-		APP.CourseCollection.fetch({
-			success: function () {
-					var link = APP.CourseCollection;
-					var newView = new APP.CoursesView({
-					collection: link
-				
-				});
-				$('#linksGoHere').append(newView.render().el);
-			
-		}
-	});
 	},
 	newPageLoader : function (page) {
 		APP.couresCollection = new APP.CoursesCollection();
@@ -138,8 +117,18 @@ APP.Router = Backbone.Router.extend({
 	gameOver: function () {
 		var course = APP.couresCollection.get(1);
 		console.log(APP.userCollection);
-		$('#startFinish').html('<h2>Congrats! You made it from '+ course.get('startPage') + ' to ' + course.get('endPage')+ '</h2>');
-		$('#wikiTitle').html('<h3><a href="/">Start Over!</a></h3>');
+		FB.api('/me', function(response) {
+			if (response.first_name) {
+				$('#startFinish').html('<h2>Congrats ' + response.first_name + '! You made it from '+ course.get('startPage') + ' to ' + course.get('endPage')+ '</h2>');
+				$('#wikiTitle').html('<h3><a href="/">Start Over!</a></h3>');
+			} else {
+				$('#startFinish').html('<h2>Congrats! You made it from '+ course.get('startPage') + ' to ' + course.get('endPage')+ '</h2>');
+				$('#wikiTitle').html('<h3><a href="/">Start Over!</a></h3>');
+			}
+			});
+		};
+		
+
 	}
 
 });
