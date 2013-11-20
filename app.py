@@ -191,4 +191,4 @@ def firstCourse():
 			return Response(json.dumps(makeWikiObjects()), content_type='application/json')
 
 if __name__ == "__main__":
-	app.run()
+	app.run(host = 0.0.0.0)
