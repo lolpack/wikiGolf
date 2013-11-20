@@ -2,7 +2,7 @@ from flask import Flask, render_template, Markup, request, Response, redirect, u
 import jinja2
 import wikipedia as W
 import json
-import string, re
+import string
 import pymongo
 import random
 import os
@@ -78,13 +78,14 @@ class WikiPage():
 
 		links, title = self.loadGivenWikiPage(page)
 		pageContent = self.pageCon
+		links = sorted(links, reverse=True)
 		for link in links:
 			if type(pageContent) != unicode:
 				pageContent = unicode(pageContent, errors='ignore')
-			if link in pageContent:
-				regex = re.compile(link)
-				pageContent = regex.sub(u"<a href='#wiki/{link}'>{link}</a>".format(link=link), pageContent)
-				pageContent = pageContent.replace( '\n', u"<br>".format(link=link))
+	
+			regex = re.compile(link)
+			pageContent = pageContent.replace(link, u"<a href='#wiki/{link}'>{link}</a>".format(link=link))
+			pageContent = pageContent.replace( '\n', u"<br>".format(link=link))
 
 		return pageContent
 
