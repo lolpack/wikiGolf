@@ -36,7 +36,6 @@ h2, h3 {
 	margin-left: auto;
     margin-right: auto;
     max-width: 960px;
-    text-align: center;
 }
 
 body {
@@ -103,9 +102,8 @@ header {
 
 .fixed-status {
 	width: 100%;
-	height: 20px;
     margin: 0 auto;
-    background-color: grey;
+    background-color: #8A8A8A;
     border-bottom: 1px solid #CCC;
     box-shadow: 1px 2px rgba(218, 218, 218, 0.71);
    	font-weight: 200;
@@ -129,12 +127,14 @@ header {
 #inner-div {
 	max-width: 960px;
 	margin: auto;
+    overflow: hidden;
 }
 
 #wikiContent {
     margin-left: auto;
     margin-right: auto;
     max-width: 960px;
+    line-height: 1.5em;
 }
 
 #wikiContent a {
@@ -152,7 +152,7 @@ li {
     margin: 5px 10px 5px 0;
 }
 a:hover {
-    background-color: grey;
+    background-color: #8A8A8A;
 }
 .Float-Left {
     margin: 10px 0;

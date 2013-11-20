@@ -130,7 +130,6 @@ class Game():
 			links, self.title =  WP.loadGivenWikiPage( withUnderscores )
 			content = self.W.contentWithLinks( page )
 		self.listObjects = []
-		print content
 		self.listObjects.append({"id": 1, "current": self.title, "startPage":self.startPage,
 									 "endPage": self.endPage, "gameOver" : self.checkWinner(), "coursePath": self.courseLinks,
 									 "courseContent": content})
