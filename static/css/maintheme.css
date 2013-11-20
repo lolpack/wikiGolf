@@ -131,19 +131,19 @@ header {
 	margin: auto;
 }
 
-li a {
-    /* list-style-type: none; */
-    padding: 5px 10px;
-    /* margin: 10px; */
-    /* float: left; */
+#wikiContent {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 960px;
+}
+
+#wikiContent a {
 	text-decoration: none;
 	color: rgb(6, 128, 45);
-	border-radius: 4px;
+	border-radius: 2px;
 	background-color: #CCCCCC;
 	transition: background-color .1s linear;
 	text-shadow: -1px 1px rgba(255, 255, 255, 0.46);
-	list-style-type: none;
-    float: left;
 }
 
 li {
@@ -151,8 +151,8 @@ li {
     float: left;
     margin: 5px 10px 5px 0;
 }
-li a:hover {
-    background-color: #CCC;
+a:hover {
+    background-color: grey;
 }
 .Float-Left {
     margin: 10px 0;

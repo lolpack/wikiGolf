@@ -29,7 +29,7 @@ APP.Router = Backbone.Router.extend({
 		APP.couresCollection = new APP.CoursesCollection();
 		APP.couresCollection.create({next:page});
 		console.log(APP.couresCollection);
-		$('#linksGoHere').html('');
+		$('#wikiContent').html('');
 		$('#wikiTitle').html('');
 		$('#startFinish').html('');
 		$('#strokes').html('');
@@ -48,7 +48,7 @@ APP.Router = Backbone.Router.extend({
 					APP.course1view = new APP.CoursesView({
 						collection: link
 					})
-	                $('#linksGoHere').append(APP.course1view.render().el);
+	                //$('#linksGoHere').append(APP.course1view.render().el);
 	                var currentCourse = link.get(1);
 	                APP.courseTitle = new APP.CourseTitle({
 	                	model: currentCourse
@@ -63,6 +63,10 @@ APP.Router = Backbone.Router.extend({
                 	model: currentCourse
                 	})
                 	$('#coursePath').append(APP.coursePath.render().el);
+                	APP.courseContent = new APP.CourseContent({
+                	model: currentCourse
+                	})
+                	$('#wikiContent').append(APP.courseContent.render().el);
 					}
 				}
 
@@ -95,7 +99,7 @@ APP.Router = Backbone.Router.extend({
 				})
 				$('#courseForm').html('');
 				$('#instructions').html('');
-                $('#linksGoHere').append(APP.course1view.render().el);
+                //$('#linksGoHere').append(APP.course1view.render().el);
                 var currentCourse = link.get(1);
                 APP.courseTitle = new APP.CourseTitle({
                 	model: currentCourse

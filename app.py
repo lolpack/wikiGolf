@@ -2,7 +2,7 @@ from flask import Flask, render_template, Markup, request, Response, redirect, u
 import jinja2
 import wikipedia as W
 import json
-import string
+import string, re
 import pymongo
 import random
 import os
@@ -26,7 +26,6 @@ else:
     # Not on an app with the MongoHQ add-on, do some localhost action
     client = MongoClient('localhost', 27017)
     db = client['wikiGolf']
-
 
 preCourses = db.preLoadedCourses
 
@@ -72,23 +71,21 @@ class WikiPage():
 		else: 
 			print "Not Valid"
 
-	def contentWithLinks(self, page = None, Random = True):
+	def contentWithLinks(self, page):
 		"""Goes through the list of links associated with a  page
-		and finds the instances of those words in a plain test version
+		and finds the instances of those words in a plain text version
 		of the page."""
 
-		if Random:
-			links, title = self.loadRandWikiPage()
-			pageContent = self.pageCon
-			for link in links:
-				if link in pageContent:
-					pageContent = pageContent.replace( link, u"<a href='#wiki/{link}'>{link}</a>".format(link=link)).encode("utf-8")
-		else:
-			links, title = self.loadGivenWikiPage(page)
-			pageContent = self.pageCon
-			for link in links:
-				if link in pageContent:
-					pageContent = pageContent.replace( link, u"<a href='#wiki/{link}'>{link}</a>".format(link=link)).encode("utf-8")
+		links, title = self.loadGivenWikiPage(page)
+		pageContent = self.pageCon
+		for link in links:
+			if type(pageContent) != unicode:
+				pageContent = unicode(pageContent, errors='ignore')
+			if link in pageContent:
+				regex = re.compile(link)
+				pageContent = regex.sub(u"<a href='#wiki/{link}'>{link}</a>".format(link=link), pageContent, 1)
+				pageContent = pageContent.replace( '\n', u"<br>".format(link=link))
+
 		return pageContent
 
 class Game():
@@ -126,18 +123,17 @@ class Game():
 	def makeWikiObjects(self, random = False): #Creats a dictionary of links
 		if random:
 			links, self.title = self.startLinks, self.startPage #Returns dict for a random page
-			page = None
+			content = self.W.contentWithLinks( self.startPage )
 		else: 
 			page = self.courseLinks[len(self.courseLinks)-1] 
 			withUnderscores = string.replace(page  , " " , "_" ) #Returns dict for a given page
 			links, self.title =  WP.loadGivenWikiPage( withUnderscores )
+			content = self.W.contentWithLinks( page )
 		self.listObjects = []
-		id = 1
-		for link in links:
-			self.listObjects.append({"id":id, "name":link, "current": self.title, "startPage":self.startPage,
+		print content
+		self.listObjects.append({"id": 1, "current": self.title, "startPage":self.startPage,
 									 "endPage": self.endPage, "gameOver" : self.checkWinner(), "coursePath": self.courseLinks,
-									 "courseContent": None}) #"self.W.contentWithLinks()"
-			id += 1
+									 "courseContent": content})
 		return self.listObjects
 
 class User:
@@ -187,20 +183,16 @@ def nextWiki():
 			game.courseLinks.append(request.json["next"])
 			game.coursePath.append(game.makeWikiObjects())
 			user.strokes += 1
-		print "Course path: "+ str(game.courseLinks)
 		print "Winner?????" + str(game.checkWinner())
-		
 		return "Success!"
 	elif request.method == 'GET':
 		return Response(json.dumps(game.coursePath.pop()), content_type='application/json') #Return JSON data from game course array
 
-@app.route("/fistCourse", methods = ['GET']) #Deprecated
+@app.route("/fist", methods = ['GET']) #Deprecated
 def firstCourse():
-	if request.method == 'GET':
-		if request.json == 'par1':
-			t = posts.find_one()
-			pager.append(t['par1'][0])
-			return Response(json.dumps(makeWikiObjects()), content_type='application/json')
+	test = WP.contentWithLinks()
+	return render_template('test.html', test = test)
 
 if __name__ == "__main__":
-	app.run(host = '0.0.0.0', port = int(os.environ.get('PORT', 5000)))
+	app.run(debug=True, host = '0.0.0.0', port = int(os.environ.get('PORT', 5000)))
+
