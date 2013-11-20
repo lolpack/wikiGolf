@@ -14,7 +14,7 @@ app = Flask(__name__)
 
 from pymongo import MongoClient
 
-client = MongoClient(os.environ('MONGOHQ_URL'))
+client = MongoClient(os.environ['MONGOHQ_URL'])
 db= client.wikiGolf
 preCourses = db.preLoadedCourses
 
