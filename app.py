@@ -18,6 +18,9 @@ client = MongoClient(os.environ['MONGOHQ_URL'])
 db= client.wikiGolf
 preCourses = db.preLoadedCourses
 
+preCourses.insert({"this": "is a test"})
+
+print preCourses.find_one()
 
 class WikiPage():
 
