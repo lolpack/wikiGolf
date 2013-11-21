@@ -1,6 +1,5 @@
 node_modules/
 bower_components/
-public/
 .DS_Store
 .pyc
 templates/test.html

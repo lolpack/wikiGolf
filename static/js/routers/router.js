@@ -74,7 +74,8 @@ APP.Router = Backbone.Router.extend({
 		$('#strokes').html('');
 
 		var target = document.getElementById('wikiContent');
-		var spinner = new Spinner().spin();
+		var spinner = new Spinner();
+		spinner.spin();
 		target.appendChild(spinner.el);
 
 		APP.courseCollection = new APP.CoursesCollection();
