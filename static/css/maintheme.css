@@ -16,6 +16,10 @@ h1 {
 	text-shadow: 1px 1px #000;
 }
 
+img {
+    display: none;
+}
+
 #Header {
     text-decoration: none;
     color: #FFF;

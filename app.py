@@ -66,7 +66,7 @@ class WikiPage():
 
 		if self.Page.title:
 			print type(self.Page.title)
-			self.pageCon = self.Page.content
+			self.pageCon = self.Page.html()
 			return self.Page.links, self.Page.title
 		else: 
 			print "Not Valid"
@@ -78,14 +78,10 @@ class WikiPage():
 
 		links, title = self.loadGivenWikiPage(page)
 		pageContent = self.pageCon
-		links.sort(key=len)
-		for link in links:
-			if type(pageContent) != unicode:
-				pageContent = unicode(pageContent, errors='ignore')
-	
-			pageContent = re.sub(link, u"<a href='#wiki/{link}'>{link}</a>".format(link=link), pageContent, flags=re.IGNORECASE)
-			pageContent = pageContent.replace( '\n', u"<br>")
 
+		pageContent = pageContent.replace( 'wiki/', "#wiki/")
+		p = re.compile(r'<img.*?/>')
+		pageContent = p.sub('', pageContent)
 		return pageContent
 
 class Game():
@@ -186,7 +182,7 @@ def nextWiki():
 			game.courseLinks.append(request.json["next"])
 			game.coursePath.append(game.makeWikiObjects())
 			user.strokes += 1
-		print "Winner?????" + str(game.checkWinner())
+		print game.coursePath
 		return "Success!"
 	elif request.method == 'GET':
 		return Response(json.dumps(game.coursePath.pop()), content_type='application/json') #Return JSON data from game course array
