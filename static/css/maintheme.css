@@ -140,8 +140,10 @@ header {
     max-width: 960px;
 }
 
-#wikiContent p {
+#wikiContent .pageEmbed {
     line-height: 1.5em;
+    background: white;
+    padding: 5px;
 }
 
 #wikiContent a {
@@ -168,6 +170,8 @@ a:hover {
 .spinner {
     margin-right: auto;
     margin-left: auto;
+    min-height: 20px;
+    top: 13px;
 }
 
 #submitButton {

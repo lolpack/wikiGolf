@@ -1,6 +1,6 @@
 var APP = window.APP = {};
 
-//fgnass.github.com/spin.js#v1.3.2
+// Everything below is spinner logic. Credit to: fgnass.github.com/spin.js#v1.3.2
 
 /**
  * Copyright (c) 2011-2013 Felix Gnass

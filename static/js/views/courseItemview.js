@@ -1,3 +1,5 @@
+//Course view that displays an individual link on a page. Not in use for now. 
+
 APP.CourseItemView = Backbone.View.extend({
         tagName: 'li',
         events: {

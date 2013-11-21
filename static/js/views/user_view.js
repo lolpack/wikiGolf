@@ -1,3 +1,5 @@
+//View that displays a user's current stroke count
+
 APP.UserView = Backbone.View.extend({
         tagName: 'div',
 

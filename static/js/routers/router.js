@@ -1,40 +1,39 @@
 APP.Router = Backbone.Router.extend({
 	routes: {
-		"wiki/:page" : "newPageLoader",
-		"course/:courseChoice" : "pick_course",
-		"stats" : "gameOver"
+		"wiki/:page" : "newPageLoader", //Get's called when someone clicks on a wikipedia link. Loads next wiki page
+		"course/:courseChoice" : "pick_course", //Get's called when someone makes a course choice
+		"stats" : "gameOver" //Called if backbone tries to load the correct ending course. Renders game over page.
 	},
 	newPageLoader : function (page) {
-		APP.couresCollection = new APP.CoursesCollection();
-		APP.couresCollection.create({next:page});
-		console.log(APP.couresCollection);
+		APP.courseCollection = new APP.CoursesCollection();
+		APP.courseCollection.create({next:page});
+
+		//Clear content from screen
 		$('#wikiContent').html('');
 		$('#wikiTitle').html('');
 		$('#startFinish').html('');
 		$('#strokes').html('');
 
-		$('#wikiContent').css('min-height', '20px');
 		var target = document.getElementById('wikiContent'); //Spinner logic and view
 		var spinner = new Spinner().spin();
 		target.appendChild(spinner.el);
 
 		APP.course = new APP.Course();
 
-		APP.couresCollection.fetch({
+		APP.courseCollection.fetch({
 			success: function () {
 				spinner.stop(); //Stop spinner
-				var gameState = APP.couresCollection.get(1);
+				var gameState = APP.courseCollection.get(1);
 				if (gameState.attributes.gameOver === true) {
 					APP.router.navigate('#stats', {trigger: true, replace: true})//Check if game is over, send to congrats screen
 					
 				} else {
 					$('#coursePath').html('');
-					console.log(gameState.attributes.gameOver);
-					var link = APP.couresCollection;
+					var link = APP.courseCollection;
 					APP.course1view = new APP.CoursesView({
 						collection: link
 					})
-	                //$('#linksGoHere').append(APP.course1view.render().el);
+	                //$('#linksGoHere').append(APP.course1view.render().el); //Render's just the links
 	                var currentCourse = link.get(1);
 	                APP.courseTitle = new APP.CourseTitle({
 	                	model: currentCourse
@@ -58,7 +57,7 @@ APP.Router = Backbone.Router.extend({
 
 			});
 	
-		APP.userCollection.fetch({
+		APP.userCollection.fetch({ //Render user information 
 			success: function () {
 				var collection = APP.userCollection;
 				var strokes = collection.get(1);
@@ -78,14 +77,14 @@ APP.Router = Backbone.Router.extend({
 		var spinner = new Spinner().spin();
 		target.appendChild(spinner.el);
 
-		APP.couresCollection = new APP.CoursesCollection();
-		APP.couresCollection.create({next:courseChoice});
-		console.log(APP.couresCollection);
-		APP.couresCollection.fetch({
+		APP.courseCollection = new APP.CoursesCollection();
+		APP.courseCollection.create({next:courseChoice});
+		console.log(APP.courseCollection);
+		APP.courseCollection.fetch({
 			success: function () {
 				spinner.stop();
 				$("#coursePickerForm").html('');
-				var link = APP.couresCollection;
+				var link = APP.courseCollection;
 				APP.course1view = new APP.CoursesView({
 					collection: link
 				})
@@ -128,7 +127,7 @@ APP.Router = Backbone.Router.extend({
 		})
 	},
 	gameOver: function () {
-		var course = APP.couresCollection.get(1);
+		var course = APP.courseCollection.get(1);
 		console.log(APP.userCollection);
 		FB.api('/me', function(response) {
 			if (response.first_name) {
@@ -146,5 +145,5 @@ APP.Router = Backbone.Router.extend({
 });
 
 
-APP.router = new APP.Router();
+APP.router = new APP.Router(); //Instantiate APP.Router
 Backbone.history.start({root: "/"})

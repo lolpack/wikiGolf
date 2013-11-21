@@ -33,12 +33,12 @@
 
 	<script>$( document ).ready(function () {
 		$("#coursePickerForm").submit(function(e){
-    		return false;
+    		return false; //Prevent post from form press
 			});
 		$('#submitButton').on('click', function () {
 			var buttonVal = $('input[type="radio"]:checked').val();
 			if (buttonVal) {
-				APP.router.navigate('#course/' + buttonVal, {trigger: true, replace: true}); //Logic to load course from server
+				APP.router.navigate('#course/' + buttonVal, {trigger: true, replace: true}); //Logic to load course from server via backbone
 			} else {
 				return false;
 			}
@@ -54,7 +54,7 @@
 	<header>
   		<div class="inner-wrapper">
           <h1 id="welcome"><a href="/" id="Header">wikiGolf</a></h1>
-          <fb:login-button show-faces="true" width="200" max-rows="1" id="Facebook"></fb:login-button>
+          <fb:login-button show-faces="true" width="200" max-rows="1" id="Facebook"></fb:login-button> 
       	</div>
   </header>
   	<div class="fixed-status">
@@ -66,8 +66,7 @@
   	<h2 id="instructions">Pick a course and try to get from one Wikipedia page to another with as few links as possible. </h2>
 	
 	<div id="startFinish">
-		<div id="spinner">
-		</div>
+
 	</div>
 
 	<div id="wikiTitle">
@@ -117,7 +116,7 @@
   window.fbAsyncInit = function() {
   FB.init({
     appId      : '1436048966616255',
-    logging: true, 
+    logging	   : true, 
     status     : true, // check login status
     cookie     : true, // enable cookies to allow the server to access the session
     xfbml      : true  // parse XFBML
@@ -127,7 +126,7 @@
     // Here we specify what we do with the response anytime this event occurs. 
     if (response.status === 'connected') {
 
-      testAPI();
+      console.log("Connected to Facebook")
     } else if (response.status === 'not_authorized') {
 
       FB.login();
@@ -146,12 +145,6 @@
    ref.parentNode.insertBefore(js, ref);
   }(document));
 
-  function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
-      console.log('Good to see you, ' + response.name + '.');
-    });
-  }
 </script>
 
 </body>
