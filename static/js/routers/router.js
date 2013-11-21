@@ -13,6 +13,7 @@ APP.Router = Backbone.Router.extend({
 		$('#startFinish').html('');
 		$('#strokes').html('');
 
+		$('#wikiContent').css('min-height', '20px');
 		var target = document.getElementById('wikiContent'); //Spinner logic and view
 		var spinner = new Spinner().spin();
 		target.appendChild(spinner.el);
