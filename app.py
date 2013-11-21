@@ -45,7 +45,7 @@ class WikiPage():
 			Random1 = W.random()
 			self.randomPage = W.page(Random1)
 		except:
-			loadRandWikiPage()
+			self.loadRandWikiPage()
 
 		if self.randomPage.title:
 			print type(self.randomPage.title)
@@ -59,7 +59,6 @@ class WikiPage():
 		Returns tuple: links first position, title second"""
 
 		self.Page = W.page(page)
-		loadGivenWikiPage(page)
 
 		if self.Page.title:
 			print type(self.Page.title)
