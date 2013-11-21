@@ -12,10 +12,16 @@ APP.Router = Backbone.Router.extend({
 		$('#wikiTitle').html('');
 		$('#startFinish').html('');
 		$('#strokes').html('');
+
+		var target = document.getElementById('wikiContent'); //Spinner logic and view
+		var spinner = new Spinner().spin();
+		target.appendChild(spinner.el);
+
 		APP.course = new APP.Course();
 
 		APP.couresCollection.fetch({
 			success: function () {
+				spinner.stop(); //Stop spinner
 				var gameState = APP.couresCollection.get(1);
 				if (gameState.attributes.gameOver === true) {
 					APP.router.navigate('#stats', {trigger: true, replace: true})//Check if game is over, send to congrats screen
@@ -66,12 +72,18 @@ APP.Router = Backbone.Router.extend({
 	},
 	pick_course: function (courseChoice) {
 		$('#strokes').html('');
+
+		var target = document.getElementById('wikiContent');
+		var spinner = new Spinner().spin();
+		target.appendChild(spinner.el);
+
 		APP.couresCollection = new APP.CoursesCollection();
 		APP.couresCollection.create({next:courseChoice});
 		console.log(APP.couresCollection);
 		APP.couresCollection.fetch({
 			success: function () {
-
+				spinner.stop();
+				$("#coursePickerForm").html('');
 				var link = APP.couresCollection;
 				APP.course1view = new APP.CoursesView({
 					collection: link
@@ -134,4 +146,4 @@ APP.Router = Backbone.Router.extend({
 
 
 APP.router = new APP.Router();
-Backbone.history.start({root: "/", pushState: true})
+Backbone.history.start({root: "/"})

@@ -39,14 +39,10 @@
 			var buttonVal = $('input[type="radio"]:checked').val();
 			if (buttonVal) {
 				APP.router.navigate('#course/' + buttonVal, {trigger: true, replace: true}); //Logic to load course from server
-				$('#fixed-status').css("display", "show" );
 			} else {
 				return false;
 			}
 			})
-		$(window).on('scroll', function () {
-			$('#fixed-status').css("top","0px");
-		})
 		});
 
 	</script>
@@ -70,6 +66,8 @@
   	<h2 id="instructions">Pick a course and try to get from one Wikipedia page to another with as few links as possible. </h2>
 	
 	<div id="startFinish">
+		<div id="spinner">
+		</div>
 	</div>
 
 	<div id="wikiTitle">
