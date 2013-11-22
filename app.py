@@ -52,8 +52,6 @@ class WikiPage():
 			self.loadRandWikiPage()
 
 		if self.randomPage.title:
-			print type(self.randomPage.title)
-			self.pageCon = self.randomPage.content
 			return self.randomPage.links, self.randomPage.title
 		else:
 			print "Not valid"
@@ -99,7 +97,7 @@ class Game():
 		self.W = Wiki
 		self.user = user
 		self.coursePath = [] #List of objects containg course name and all links associated with that page.
-		self.courseLinks = [] #list of title (single strings) that user clicked on
+		self.courseHTML = [] #list of HTML for a given course (single strings)
 		self.startPage = None
 		self.startLinks = None
 		self.endPage = None
@@ -110,14 +108,18 @@ class Game():
 		if Random:
 			self.startLinks, self.startPage = self.W.loadRandWikiPage() #First random wiki page for initial course load
 			links, self.endPage = self.W.loadRandWikiPage() #Page that the user needs to end up on
-			self.courseLinks.append(self.startPage)
+			self.courseHTML.append(self.startPage)
 		else: 
 			courses = preCourses.find_one({"par":par})
 			print "Courses" + str(len(courses['courses']))
 			course = courses['courses'][random.randrange(len(courses['courses'])-1)]
-			self.startLinks, self.startPage = self.W.loadGivenWikiPage(course['start'])
-			endLinks, self.endPage = self.W.loadGivenWikiPage(course['finish']) #endLinks unused
-			self.courseLinks.append(self.startPage)
+			self.endPage = course['finish']
+			if course['html']:
+				
+				self.courseHTML.append(course['html'])
+			else: 
+				self.startLinks, self.startPage = self.W.loadGivenWikiPage(course['start'])
+				self.courseHTML.append(self.startPage)
 
 	def checkWinner(self):
 		if self.title == self.endPage:
@@ -130,20 +132,20 @@ class Game():
 			links, self.title = self.startLinks, self.startPage #Returns dict for a random page
 			content = self.W.contentWithLinks( self.startPage )
 		else: 
-			page = self.courseLinks[len(self.courseLinks)-1] 
+			page = self.courseHTML[len(self.courseHTML)-1] 
 			withUnderscores = string.replace(page  , " " , "_" ) #Returns dict for a given page
 			links, self.title =  WP.loadGivenWikiPage( withUnderscores )
 			content = self.W.contentWithLinks( page )
 		self.listObjects = []
 		self.listObjects.append({"id": 1, "current": self.title, "startPage":self.startPage,
-									 "endPage": self.endPage, "gameOver" : self.checkWinner(), "coursePath": self.courseLinks,
+									 "endPage": self.endPage, "gameOver" : self.checkWinner(), "coursePath": self.courseHTML,
 									 "courseContent": content})
 		return self.listObjects
 
 	def clearGame(self):
 		self.user.strokes = 0
 		self.coursePath = []
-		self.courseLinks = []
+		self.courseHTML = []
 
 class User:
 	"""Represents a user in the game and her/his profile. This section to be filled out more completely 
@@ -186,7 +188,7 @@ def nextWiki():
 			game.startGame(Random= False, par=par)
 			game.coursePath.append(game.makeWikiObjects(random = False))
 		else:
-			game.courseLinks.append(request.json["next"]) #When a specific link is click on to load the next wikiPage
+			game.courseHTML.append(request.json["next"]) #When a specific link is click on to load the next wikiPage
 			game.coursePath.append(game.makeWikiObjects())
 			user.strokes += 1
 		return "Success!"
