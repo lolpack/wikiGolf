@@ -64,7 +64,8 @@ class WikiPage():
 
 		if self.Page.title:
 			print type(self.Page.title)
-			self.pageCon = self.Page.html()
+			if not self.pageCon:
+				self.pageCon = self.Page.html()
 			return self.Page.links, self.Page.title
 		else: 
 			print "Not Valid"
@@ -115,8 +116,9 @@ class Game():
 			course = courses['courses'][random.randrange(len(courses['courses'])-1)]
 			self.endPage = course['finish']
 			if course['html']:
-				
-				self.courseHTML.append(course['html'])
+				self.startPage = course['start']
+				self.courseHTML.append(self.startPage)
+				self.W.pageCon = course['html']
 			else: 
 				self.startLinks, self.startPage = self.W.loadGivenWikiPage(course['start'])
 				self.courseHTML.append(self.startPage)
