@@ -187,7 +187,7 @@ def nextWiki():
 			game.courseHTML.append(request.json["next"]) #When a specific link is click on to load the next wikiPage
 			game.coursePath.append(game.makeWikiObjects())
 			user.strokes += 1
-		return "Success!"
+		return str(game.coursePath)
 
 	elif request.method == 'GET':
 		return Response(json.dumps(game.coursePath.pop()), content_type='application/json') 
