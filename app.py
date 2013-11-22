@@ -30,6 +30,7 @@ else:
     db = client['wikiGolf']
 
 preCourses = db.preLoadedCourses
+usersDB = db.users
 
 print preCourses.find_one()
 
@@ -96,7 +97,7 @@ class Game():
 	def __init__(self, Wiki, user):
 		self.W = Wiki
 		self.user = user
-		self.coursePath = [] #List of objects containg course name and all links associated with that page.
+		self.coursePath = None #List of objects containg course name and all links associated with that page.
 		self.courseHTML = [] #list of HTML for a given course (single strings)
 		self.startPage = None
 		self.startLinks = None
@@ -140,20 +141,30 @@ class Game():
 
 	def clearGame(self):
 		self.user.strokes = 0
-		self.coursePath = []
+		self.coursePath = None
 		self.courseHTML = []
 
 class User:
 	"""Represents a user in the game and her/his profile. This section to be filled out more completely 
 	as user profile functionality is built out"""
 
-	def __init__(self):
+	def __init__(self, userDB):
 		self.strokes = 0
 		self.history = {"courseHistory": [None]}
+		self.users = userDB
+
+	def userExists(self, req):
+		if users.find({"facebookPointer":req['facebookPointer']}):
+			return True
+		else:
+			return False
+
+	def insertUser(self, req):
+		users.insert({"facebookPointer":req['facebookPointer'], "name": req['name']})
 
 
 WP = WikiPage()
-user = User()
+user = User(usersDB)
 game = Game(WP, user)
 
 ###Application routes and main game logic###
@@ -168,7 +179,17 @@ def main():
 def getJSON():
 
 	if request.method == 'POST':
-		return "Success!"
+		print "User post route hit"
+		print request.json
+		if request.json["facebookPointer"]:
+			if user.userExists:
+				return "Already a user"
+			else:
+				user.insertUser(request.json)
+				return "User Created"
+		else :
+			return "Invalid user data posted"
+
 	elif request.method == 'GET':
 		return Response(json.dumps({"strokes": user.strokes}), content_type='application/json')
 
@@ -178,19 +199,19 @@ def nextWiki():
 	if request.method == 'POST':
 		if request.json["next"] == 'random': #Random course
 			game.startGame()
-			game.coursePath.append(game.makeWikiObjects(random = True))
+			game.coursePath = game.makeWikiObjects(random = True)
 		elif request.json["next"].startswith('par'): #Pre loaded (par) course
 			par = int(request.json["next"][-1])
 			game.startGame(Random= False, par=par)
-			game.coursePath.append(game.makeWikiObjects(random = False))
+			game.coursePath = game.makeWikiObjects(random = False)
 		else:
 			game.courseHTML.append(request.json["next"]) #When a specific link is click on to load the next wikiPage
-			game.coursePath.append(game.makeWikiObjects())
+			game.coursePath = game.makeWikiObjects()
 			user.strokes += 1
 		return str(game.coursePath)
 
 	elif request.method == 'GET':
-		return Response(json.dumps(game.coursePath.pop()), content_type='application/json') 
+		return Response(json.dumps(game.coursePath), content_type='application/json') 
 		#Return JSON data from game course array
 
 @app.route("/fist", methods = ['GET']) #Not used for production. Used to test raw html output with 'test.html' page

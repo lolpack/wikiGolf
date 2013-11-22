@@ -16,6 +16,8 @@
 	<script src="../static/js/collections/courses.js"></script>
 	<script src="../static/js/collections/users.js"></script>
 
+
+
 	<!-- Load Backbone Models and collections -->
 	
 	<script src="../static/js/views/Courses_View.js"></script>
@@ -126,12 +128,14 @@
     // Here we specify what we do with the response anytime this event occurs. 
     if (response.status === 'connected') {
 
-      console.log("Connected to Facebook")
+      console.log("Connected to Facebook");
+      //APP.createUser();
     } else if (response.status === 'not_authorized') {
 
       FB.login();
+      alert("not_authorized");
     } else {
-
+    	alert("else!")
       FB.login();
     }
   });
