@@ -77,6 +77,9 @@ APP.Router = Backbone.Router.extend({
 		var spinner = new Spinner();
 		spinner.spin();
 		target.appendChild(spinner.el);
+		$('#courseForm').html('');
+		$('#instructions').html('');
+		$("#coursePickerForm").html('');
 
 		APP.courseCollection = new APP.CoursesCollection();
 		APP.courseCollection.create({next:courseChoice});
@@ -84,13 +87,12 @@ APP.Router = Backbone.Router.extend({
 		APP.courseCollection.fetch({
 			success: function () {
 				spinner.stop();
-				$("#coursePickerForm").html('');
+
 				var link = APP.courseCollection;
 				APP.course1view = new APP.CoursesView({
 					collection: link
 				})
-				$('#courseForm').html('');
-				$('#instructions').html('');
+
                 //$('#linksGoHere').append(APP.course1view.render().el);
                 var currentCourse = link.get(1);
                 APP.courseTitle = new APP.CourseTitle({
