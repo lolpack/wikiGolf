@@ -17,7 +17,7 @@ APP.UserModel = Backbone.Model.extend({
 APP.createUser = function () {
 	FB.api('/me', function(response) {
 			APP.fbInfo = {id: response.id, name : response.name};
-	};
+	});
 	APP.insertUser = new APP.UserModel;
 	APP.insertUser.create({facebookPointer: APP.fbInfo.id, name : APP.fbInfo.name})
 
