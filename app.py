@@ -175,10 +175,10 @@ def main():
 	game.clearGame()
 	return render_template('index.html')
 
-@app.route("/user", methods = ['POST', 'GET']) #End point for AJAX calls to get user data
+@app.route("/user", methods = ['PUT', 'GET']) #End point for AJAX calls to get user data
 def getJSON():
 
-	if request.method == 'POST':
+	if request.method == 'PUT':
 		print "User post route hit"
 		print request.json
 		if request.json["facebookPointer"]:
