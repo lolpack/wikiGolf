@@ -8,7 +8,8 @@ APP.UserModel = Backbone.Model.extend({
 		facebookPointer: null,
 		history: null
 		};
-	}
+	},
+		url: "/user"
 });
 
 APP.createUser = function () {
