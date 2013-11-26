@@ -19,7 +19,7 @@ APP.createUser = function () {
 			APP.fbInfo = {id: response.id, name : response.name};
 	
 			APP.insertUser = new APP.UserModel;
-			APP.insertUser.create({facebookPointer: APP.fbInfo.id, name : APP.fbInfo.name})
+			APP.insertUser.save({facebookPointer: APP.fbInfo.id, name : APP.fbInfo.name})
 
 			}
 )};
