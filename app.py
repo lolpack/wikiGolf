@@ -60,15 +60,13 @@ class WikiPage():
 	def loadGivenWikiPage(self, page, preloaded = False):
 		"""Grabs a specified wiki page.
 		Returns tuple: links first position, title second"""
-
-		self.Page = W.page(page)
-
-		if self.Page.title:
-			print type(self.Page.title)
+		try:
+			self.Page = W.page(page)
 			self.pageCon = self.Page.html()
 			return self.Page.links, self.Page.title
-		else: 
-			print "Not Valid"
+		except:
+			self.Page = "This page is unavailable through the API. Please try starting your course over"
+			return "Unavailable", "Unavailable"
 
 	def contentWithLinks(self, page):
 		"""Goes through the list of links associated with a  page
