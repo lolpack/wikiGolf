@@ -65,7 +65,7 @@ class WikiPage():
 			self.pageCon = self.Page.html()
 			return self.Page.links, self.Page.title
 		except:
-			self.pageCon = "This page is unavailable through the API. Please try starting your course over"
+			self.pageCon = "Barnacles! This page is unavailable through the API. Please try <a href="/"> starting over </a>."
 			return "Unavailable", "Unavailable"
 
 	def contentWithLinks(self, page):
