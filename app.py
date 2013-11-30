@@ -65,7 +65,7 @@ class WikiPage():
 			self.pageCon = self.Page.html()
 			return self.Page.links, self.Page.title
 		except:
-			self.Page = "This page is unavailable through the API. Please try starting your course over"
+			self.pageCon = "This page is unavailable through the API. Please try starting your course over"
 			return "Unavailable", "Unavailable"
 
 	def contentWithLinks(self, page):
@@ -171,7 +171,7 @@ game = Game(WP, user)
 @app.route("/")
 def main():
 
-	game.clearGame()
+	game.clearGame() #Redundent clearing of the game course
 	return render_template('index.html')
 
 @app.route("/user", methods = ['PUT', 'GET']) #End point for AJAX calls to get user data
