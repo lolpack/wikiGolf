@@ -104,6 +104,7 @@ class Game():
 	
 	def startGame(self, Random = True, par = None): 
 		"""Picks a start and end point based on two randomly generated wiki pages"""
+		self.clearGame()
 		if Random:
 			self.startLinks, self.startPage = self.W.loadRandWikiPage() #First random wiki page for initial course load
 			links, self.endPage = self.W.loadRandWikiPage() #Page that the user needs to end up on
@@ -219,5 +220,5 @@ def firstCourse():
 	return render_template('test.html', test = test)
 
 if __name__ == "__main__":
-	app.run(debug=True, host = '0.0.0.0', port = int(os.environ.get('PORT', 5000)))
+	app.run( host = '0.0.0.0', port = int(os.environ.get('PORT', 5000)))
 
