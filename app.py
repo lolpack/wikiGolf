@@ -65,7 +65,7 @@ class WikiPage():
 			self.pageCon = self.Page.html()
 			return self.Page.links, self.Page.title
 		except:
-			self.pageCon = "Barnacles! This page is unavailable through the API. Please try <a href="/"> starting over </a>."
+			self.pageCon = "Barnacles! This page is unavailable through the API. Please try <a href='/'> starting over </a>."
 			return "Unavailable", "Unavailable"
 
 	def contentWithLinks(self, page):
@@ -95,7 +95,7 @@ class Game():
 	def __init__(self, Wiki, user):
 		self.W = Wiki
 		self.user = user
-		self.coursePath = None #List of objects containg course name and all links associated with that page.
+		self.coursePath = None #Variable of objects containg course name and all links associated with that page.
 		self.courseHTML = [] #list of HTML for a given course (single strings)
 		self.startPage = None
 		self.startLinks = None
