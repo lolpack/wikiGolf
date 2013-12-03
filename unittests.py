@@ -48,7 +48,21 @@ class TestWikiGolf(unittest.TestCase):
 		self.assertEqual(pageContent, baconHTML_cleaned)
 
 	"""Tests for Game class"""
-	# in progress
+	
+	def testStartGameRandom(self):
+		"""Ensures that the HTML for a random course is added to the courseHTML list
+		when method is called"""
+		self.Game.startGame(Random = True)
+		self.assertTrue(self.Game.courseHTML[0])
+		self.assertTrue(self.Game.startPage)
+		self.assertTrue(self.Game.endPage)
+
+	def testStartGamenotRandom(self):
+
+		self.Game.startGame(Random = False, par = 3)
+		self.assertTrue(self.Game.courseHTML[0])
+		self.assertTrue(self.Game.startPage)
+		self.assertTrue(self.Game.endPage)
 
 	"""Tests for User class"""
 	# in progress
