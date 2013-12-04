@@ -58,11 +58,20 @@ class TestWikiGolf(unittest.TestCase):
 		self.assertTrue(self.Game.endPage)
 
 	def testStartGamenotRandom(self):
-
+		"""Ensures that the HTML for a course loaded from Mongo is added to the courseHTML list
+		when method is called"""
 		self.Game.startGame(Random = False, par = 3)
 		self.assertTrue(self.Game.courseHTML[0])
 		self.assertTrue(self.Game.startPage)
 		self.assertTrue(self.Game.endPage)
+
+	def testCheckWinnerTrue(self):
+		"""Tests if the current path is the same as the end path. If so, return True"""
+		self.Game.title = 'Vegetarian bacon'
+		self.Game.endPage = 'Vegetarian bacon'
+		gameState = self.Game.checkWinner()
+		self.assertTrue(gameState)
+
 
 	"""Tests for User class"""
 	# in progress

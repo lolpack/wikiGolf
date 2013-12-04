@@ -202,7 +202,7 @@ def nextWiki():
 		elif request.json["next"].startswith('par'): #Pre loaded (par) course
 			par = int(request.json["next"][-1])
 			game.startGame(Random= False, par=par)
-			game.coursePath = game.makeWikiObjects(random = False)
+			game.coursePath = game.makeWikiObjects()
 		else:
 			game.courseHTML.append(request.json["next"]) #When a specific link is click on to load the next wikiPage
 			game.coursePath = game.makeWikiObjects()
