@@ -107,8 +107,8 @@ class TestWikiGolf(unittest.TestCase):
 		self.assertEqual(self.Game.coursePath, None)
 		self.assertEqual(self.Game.courseHTML, [])
 
-###TEST STRINGS###
 
+###TEST STRINGS###
 
 baconHTML = W.page('Vegetarian_bacon').html()
 
