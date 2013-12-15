@@ -77,7 +77,6 @@ class WikiPage():
 		pageContent = self.pageCon
 
 		pageContent = pageContent.replace( 'wiki/', "#wiki/")
-		#pageContent = pageContent.replace( '<span class="mw-editsection"', "")
 		
 		img = re.compile(r'<img.*?/>')
 		audio = re.compile(r'<audio.*?</audio>')
