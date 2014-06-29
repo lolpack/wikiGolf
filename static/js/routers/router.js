@@ -61,7 +61,6 @@ APP.Router = Backbone.Router.extend({
 			success: function () {
 				var collection = APP.userCollection;
 				var strokes = collection.get(1);
-				console.log(collection);
 				APP.userView = new APP.UserView({
 					model: strokes
 				})
@@ -83,7 +82,6 @@ APP.Router = Backbone.Router.extend({
 
 		APP.courseCollection = new APP.CoursesCollection();
 		APP.courseCollection.create({next:courseChoice});
-		console.log(APP.courseCollection);
 		APP.courseCollection.fetch({
 			success: function () {
 				spinner.stop();
@@ -120,7 +118,6 @@ APP.Router = Backbone.Router.extend({
 			success: function () {
 				var collection = APP.userCollection;
 				var strokes = collection.get(1);
-				console.log(collection);
 				APP.userView = new APP.UserView({
 					model: strokes
 				})
@@ -131,10 +128,8 @@ APP.Router = Backbone.Router.extend({
 	},
 	gameOver: function () {
 		var course = APP.courseCollection.get(1);
-		console.log(APP.userCollection);
 		FB.api('/me', function(response) {
 			APP.fbInfo = {id: response.id, name : response.name};
-			console.log(APP.fbInfo.toString());
 			if (response.first_name) {
 				$('#startFinish').html('<h2>Congrats ' + response.first_name + '! You made it from '+ course.get('startPage') + ' to ' + course.get('endPage')+ '</h2>');
 				$('#wikiTitle').html('<h3><a href="/">Start Over!</a></h3>');

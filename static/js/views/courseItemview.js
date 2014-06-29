@@ -6,10 +6,6 @@ APP.CourseItemView = Backbone.View.extend({
                 "click li": "alertStatus"
 
         },
-        alertStatus: function(e){
-                console.log('Hey you clicked the li!');
-
-        },
         template : _.template("<li> <a href='/#wiki/<%= name %>' ><%= name %></a> </li>"),
 
         render : function () {
